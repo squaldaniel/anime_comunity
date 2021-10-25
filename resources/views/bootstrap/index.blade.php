@@ -76,8 +76,8 @@
         </form>
 
         <div class="text-end">
-          <button type="button" class="btn btn-light text-dark me-2">Entrar</button>
-          <a href="https://{{$_SERVER["HTTP_HOST"]}}/newuser/" class="btn btn-primary">Ser Membro</a>
+          <a href="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/siginlogin/" class="btn btn-light text-dark me-2">Entrar</a>
+          <a href="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/newuser/" class="btn btn-primary">Ser Membro</a>
         </div>
       </div>
     </div>

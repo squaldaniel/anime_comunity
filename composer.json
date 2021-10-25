@@ -21,7 +21,10 @@
         "phpunit/phpunit": "^9.3.3"
     },
     "config": {
-        "cache-dir": "/home/kingkernel/kingbusca/public/cache"
+        "cache-dir": "/home/kingkernel/kingbusca/public/cache",
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -55,11 +58,7 @@
             "dont-discover": []
         }
     },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
+
     "minimum-stability": "dev",
     "prefer-stable": true
 }

@@ -38,6 +38,7 @@ create table membros_location(
 	membro int unsigned,
 	cep varchar(8),
     logradouro varchar(250),
+    numero varchar(20),
     complemento varchar(250),
     bairro varchar(150),
     localidade varchar(100),
@@ -60,7 +61,7 @@ insert into planos(nomeplano) values("free member");
 create table membro_plano(
 	id int unsigned auto_increment,
 	membro int unsigned,
-	plano int,
+	plano int default 1,
 	primary key(id),
 	foreign key (plano) references planos (id),
 	foreign key (membro) references membros_location (id)
@@ -68,13 +69,13 @@ create table membro_plano(
 
 delimiter //
 create procedure add_membro( arg_email varchar(80),arg_nome varchar(30), arg_sobrenome varchar(70),
-arg_cep varchar(8), arg_logradouro varchar(250), arg_complemento varchar(250), arg_bairro varchar(150),
-arg_localidade varchar(100), arg_uf varchar(2), arg_ibge int, arg_gia int, arg_ddd varchar(3), arg_siafi int)
+arg_cep varchar(8), arg_logradouro varchar(250), arg_numero varchar(20), arg_bairro varchar(150),
+arg_localidade varchar(100), arg_uf varchar(2))
 	begin
 		insert into membros(email) values (arg_email);
 		insert into membros_info(nome, sobrenome, membro) values (arg_nome, arg_sobrenome, LAST_INSERT_ID());
-		insert into membros_location (membro, cep, logradouro, complemento, bairro, localidade, uf, ibge, gia, ddd, siafi) values
-		(LAST_INSERT_ID(), arg_cep, arg_logradouro, arg_complemento, arg_bairro, arg_localidade, arg_uf, arg_ibge, arg_gia, arg_ddd, arg_siafi);
+		insert into membros_location (membro, cep, logradouro, numero, bairro, localidade, uf) values
+		(LAST_INSERT_ID(), arg_cep, arg_logradouro, arg_numero, arg_bairro, arg_localidade, arg_uf);
 		insert into membro_plano (membro, plano) values (LAST_INSERT_ID(), 1);
 	end //
 delimiter ;

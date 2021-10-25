@@ -1,141 +1,116 @@
 @extends('bootstrap.model')
 @section("body")
-<style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
+<div class="container my-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+      @if(count($errors) > 0 )
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <ul class="p-0 m-0" style="list-style: none;">
+          @foreach($errors->all() as $error)
+          <li>{{$error}}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+    
 
-  
-  <!-- Custom styles for this template -->
-  <link href="form-validation.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-  
-<div class="container">
-<main>
-  <div class="py-5 text-center">
-    <img class="d-block mx-auto mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h2>Seja membro do Clube</h2>
-    <p class="lead">Abaixo há um formulário com os dados necessários para tornar-se membro deste clube de fãs. Inscreva-se gratuitamente antes de conhecer o plano Premium.</p>
-  </div>
-  <form action="/newuser/signin/" method="POST">
-    @csrf
-  <div class="row g-5">
-    <div class="col-md-7 col-lg-8">
-      <h4 class="mb-3">Cadastro de membro</h4>
-      <form class="needs-validation" novalidate>
-        <div class="row g-3">
-          <div class="col-sm-6">
-            <label for="firstName" class="form-label">Primeiro nome</label>
-            <input type="text" class="form-control" id="nome" name="nome"  required>
-            <div class="invalid-feedback">
-              Campo Requerido.
+
+      <h1 class="display-4 fw-bold lh-1">Entre para o nosso mundo Fãs</h1>
+      <p class="lead">Seja Membro da melhor comunidade de fãs e entusiastas de super-hérois.</p>
+      <div class="row">
+        <form action="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/newuser/signin/" method="POST">
+          @csrf
+          <div class="col">
+            <div class="mb-2 row">
+              <div class="col-sm-5">
+                <input type="email" class="form-control" name="email" placeholder="E-mail" required>
+              </div>
+              <div class="col-sm-5">
+                <span id="logradouro_span">Rua:</span><input type="hidden" name="logradouro" id="logradouro" required>
+              </div>
             </div>
-          </div>
-
-          <div class="col-sm-6">
-            <label for="lastName" class="form-label">Sobre nome</label>
-            <input type="text" class="form-control" id="lastName" name="sobrenome">
-            <div class="invalid-feedback">
-              Campo Requerido.
+            <div class="mb-4 row">
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="nome" placeholder="Nome" required>
+              </div>
+              <div class="col-sm-5">
+                <span id="bairro_span">Bairro:</span><input type="hidden" name="bairro" id="bairro" required>
+              </div>
             </div>
-          </div>
-
-          <div class="col-12">
-            <label for="username" class="form-label">NickName</label>
-            <div class="input-group has-validation">
-              <span class="input-group-text">@</span>
-              <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-            <div class="invalid-feedback">
-                Campo Requerido.
+            <div class="mb-4 row">
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="sobrenome" placeholder="Sobrenome" required>
+              </div>
+              <div class="col-sm-5">
+                <span id="localidade_span">Cidade:</span><input type="hidden" name="localidade" id="localidade" required>
+              </div>
+            </div>
+            <div class="mb-4 row">
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="cep" id='cep' placeholder="CEP" required><span class="btn btn-success" id="getcep_btn" >Pegar dados</span>
+              </div>
+              <div class="col-sm-5">
+                <span id="uf_span">UF:</span><input type="hidden" name="uf" id="uf">
+              </div>
+            </div>
+            <div class="mb-4 row">
+              <div class="col-sm-5">
+                <input type="text" class="form-control" name="numero" id='numero' placeholder="Número" required>
               </div>
             </div>
           </div>
-
-          <div class="col-12">
-            <label for="email" class="form-label">E-mail </label>
-            <input type="email" class="form-control" id="email" placeholder="you@example.com">
-            <div class="invalid-feedback">
-                Campo Requerido.
-            </div>
-          </div>
-
-          <div class="col-12">
-            <label for="address2" class="form-label">Cep <span class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-          </div>
-
-          <div class="col-12">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="1234 Main St">
-            <div class="invalid-feedback">
-              Please enter your shipping address.
-            </div>
-          </div>
-
-         <div class="col-12">
-            <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-          </div>
-
-          <div class="col-md-5">
-            <label for="country" class="form-label">Country</label>
-            <select class="form-select" id="country" >
-              <option value="">Choose...</option>
-              <option>United States</option>
-            </select>
-            <div class="invalid-feedback">
-              Please select a valid country.
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <label for="state" class="form-label">State</label>
-            <select class="form-select" id="state" >
-              <option value="">Choose...</option>
-              <option>California</option>
-            </select>
-            <div class="invalid-feedback">
-              Please provide a valid state.
-            </div>
-          </div>
-
-          <div class="col-md-3">
-            <label for="zip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="zip" >
-            <div class="invalid-feedback">
-              Zip code required.
-            </div>
-          </div>
-        </div>
-
-        <hr class="my-4">
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-      </form>
+      </div>
+      <input type="reset" class="btn btn-outline-secondary btn-lg px-4" value="Limpar">
+      <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Fazer parte">
+    </div>
+  </form>
+    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+        <img class="rounded-lg-3" src="" alt="" width="720">
     </div>
   </div>
-</main>
-</form>
-
-<footer class="my-5 pt-5 text-muted text-center text-small">
-  <p class="mb-1">&copy; 2017–2021 Company Name</p>
-  <ul class="list-inline">
-    <li class="list-inline-item"><a href="#">Privacy</a></li>
-    <li class="list-inline-item"><a href="#">Terms</a></li>
-    <li class="list-inline-item"><a href="#">Support</a></li>
-  </ul>
-</footer>
 </div>
+<div id="oculta"></div>
+@endsection
+@section("footer")
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#oculta").hide();
+  $("#getcep_btn").click(function(){
+    let precep = $("#cep").val();
+    let cep = precep.replace("-", '');
+      getCep(cep);
+  });
+  $("#getcep_btn").click(function(){
+    $("#getcep_btn").attr("value", 1);
+  });
+});
+ $("#cep").mask("00000-000");
+  function getCep(cep){
+    if(cep.length < 8){
+        alert("Precisa de 8 digitos!");
+        $("cep").focus();
+        return false;
+      } else {
+        var url = 'http://viacep.com.br/ws/'+ cep +'/json/';
+        $("#oculta").load(url, function(data)
+            {
+                var obj = jQuery.parseJSON(data);
+                $("#bairro").val(obj.bairro);
+                $("#bairro_span").html("Bairro: <b>"+ obj.bairro+"</b>");
+                $("#logradouro").val(obj.logradouro);
+                $("#logradouro_span").html("Rua: <b>"+ obj.logradouro +"</b>");
+                $("#localidade").val(obj.localidade);
+                $("#localidade_span").html("Cidade: <b>"+ obj.localidade +"</b>");
+                $("#uf").val(obj.uf);
+                $("#uf_span").html("UF: <b>"+ obj.uf +"</b>");
+            });
+        }
+      }
+</script>
 @endsection
