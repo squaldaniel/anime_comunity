@@ -19,10 +19,10 @@
     
 
 
-      <h1 class="display-4 fw-bold lh-1">Entre para o nosso mundo Fãs</h1>
+      <h1 class="display-4 fw-bold lh-1">Entre para o nosso mundo de Fãs</h1>
       <p class="lead">Seja Membro da melhor comunidade de fãs e entusiastas de super-hérois.</p>
       <div class="row">
-        <form action="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/newuser/signin/" method="POST">
+        <form action="/newuser/signin/" method="POST">
           @csrf
           <div class="col">
             <div class="mb-2 row">
@@ -65,11 +65,11 @@
           </div>
       </div>
       <input type="reset" class="btn btn-outline-secondary btn-lg px-4" value="Limpar">
-      <input type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Fazer parte">
+      <input type="submit" id="submit-btn" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" value="Fazer parte">
     </div>
   </form>
     <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-        <img class="rounded-lg-3" src="" alt="" width="720">
+        <img class="rounded-lg-3" alt="" width="370" src="{{asset("legal3.gif")}}">
     </div>
   </div>
 </div>
@@ -86,8 +86,13 @@ $(document).ready(function(){
     let cep = precep.replace("-", '');
       getCep(cep);
   });
-  $("#getcep_btn").click(function(){
-    $("#getcep_btn").attr("value", 1);
+  $("#submit-btn").click(function(){
+    let logradouro = $("#logradouro").val();
+    if (logradouro == ''|| logradouro == null)
+      {
+        alert('é preciso pesquisar o CEP e obter o logradouro.');
+        return false;
+      }
   });
 });
  $("#cep").mask("00000-000");

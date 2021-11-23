@@ -76,8 +76,8 @@
         </form>
 
         <div class="text-end">
-          <a href="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/siginlogin/" class="btn btn-light text-dark me-2">Entrar</a>
-          <a href="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/newuser/" class="btn btn-primary">Ser Membro</a>
+          <button class="btn btn-light text-dark me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar</button>
+          <a href="/newuser/" class="btn btn-primary">Ser Membro</a>
         </div>
       </div>
     </div>
@@ -275,6 +275,30 @@
       </ul>
     </footer>
   </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login de Membro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/siginlogin/" method="POST">
+          <input type="email" name="email">
+          <input type="password" name="senha">
+          <input type="submit" value="entrar">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 <?php
 //use App\Models\EmailUsuarios;

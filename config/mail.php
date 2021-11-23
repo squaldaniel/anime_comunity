@@ -56,10 +56,15 @@ return [
         'postmark' => [
             'transport' => 'postmark',
         ],
-
+/*
         'sendmail' => [
             'transport' => 'sendmail',
             'path' => '/usr/sbin/sendmail -bs',
+        ],
+*/
+        'sendmail' => [
+        'transport' => 'sendmail',
+        'path' => 'C:\xampp\mailtodisk\mailtodisk.exe',
         ],
 
         'log' => [

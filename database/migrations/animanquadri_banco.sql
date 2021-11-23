@@ -13,7 +13,6 @@ create table administration(
 )engine=innodb charset=utf8mb4;
 insert into administration (email, pwdsnh, active, level_adm) values ("daniel.santos.ap@gmail.com", md5(concat("stunt_",sha1(md5("1a2b3c")))), true, 5);
 
-
 create table membros(
 	id int unsigned auto_increment,
 	email varchar(80) unique,
@@ -23,19 +22,18 @@ create table membros(
 	primary key(id)
 )engine=innodb charset=utf8mb4;
 
-
 create table membros_info(
 	id int unsigned auto_increment,
-	membro int unsigned,
+	membro varchar(80),
 	nome varchar(30),
 	sobrenome varchar(70),
 	primary key(id),
-	foreign key(membro) references membros(id) on delete cascade
+	foreign key(membro) references membros(email) on delete cascade
 )engine=innodb charset=utf8mb4;
 
 create table membros_location(
 	id int unsigned auto_increment,
-	membro int unsigned,
+	membro varchar(80),
 	cep varchar(8),
     logradouro varchar(250),
     numero varchar(20),
@@ -47,7 +45,7 @@ create table membros_location(
     gia int,
     ddd varchar(3),
     siafi int,
-	foreign key(membro) references membros_info(id) on delete cascade,
+	foreign key(membro) references membros_info(membro) on delete cascade,
 	primary key(id)
 )engine=innodb charset=utf8mb4;
 
@@ -60,23 +58,33 @@ insert into planos(nomeplano) values("free member");
 
 create table membro_plano(
 	id int unsigned auto_increment,
-	membro int unsigned,
+	membro varchar(80),
 	plano int default 1,
 	primary key(id),
 	foreign key (plano) references planos (id),
-	foreign key (membro) references membros_location (id)
+	foreign key (membro) references membros_location (membro)
 )engine=innodb charset=utf8mb4;
 
 delimiter //
 create procedure add_membro( arg_email varchar(80),arg_nome varchar(30), arg_sobrenome varchar(70),
 arg_cep varchar(8), arg_logradouro varchar(250), arg_numero varchar(20), arg_bairro varchar(150),
-arg_localidade varchar(100), arg_uf varchar(2))
+arg_localidade varchar(100), arg_uf varchar(2), arg_hash varchar(250))
 	begin
-		insert into membros(email) values (arg_email);
-		insert into membros_info(nome, sobrenome, membro) values (arg_nome, arg_sobrenome, LAST_INSERT_ID());
+		insert into membros(email, pwdsnh) values (arg_email, arg_hash);
+		insert into membros_info(nome, sobrenome, membro) values (arg_nome, arg_sobrenome, arg_email);
 		insert into membros_location (membro, cep, logradouro, numero, bairro, localidade, uf) values
-		(LAST_INSERT_ID(), arg_cep, arg_logradouro, arg_numero, arg_bairro, arg_localidade, arg_uf);
-		insert into membro_plano (membro, plano) values (LAST_INSERT_ID(), 1);
+		(arg_email, arg_cep, arg_logradouro, arg_numero, arg_bairro, arg_localidade, arg_uf);
+		insert into membro_plano (membro, plano) values (arg_email, 1);
+	end //
+delimiter ;
+
+delimiter //
+	create procedure del_membro(arg_id int)
+	begin
+		delete from membro_plano where id = arg_id;
+		delete from membros_location where id = arg_id;
+		delete from membros_info where id = arg_id;
+		delete from membros where id= arg_id;
 	end //
 delimiter ;
 
@@ -142,6 +150,7 @@ create table tokens_access(
 	expire_in datetime default (ADDDATE(CURRENT_TIMESTAMP, INTERVAL 1 DAY)),
 	primary key(id)
 )engine=innodb charset=utf8mb4;
+
 
 
 
