@@ -28,7 +28,7 @@
         <div>
           <h2>Não perca mais tempo!!</h2>
           <p>Confirme seu e-mail clicando no link abaixo e comece a interagir em nossa comunidade</p>
-          <a href="http://{{$_SERVER["HTTP_HOST"]}}'/useractive/'{{$user->pwdsnh}}" class="btn btn-primary">
+          <a href="http://{{$_SERVER["HTTP_HOST"]}}/useractive/{{$user->pwdsnh}}" class="btn btn-primary">
             Confirmar
           </a>
         </div>

@@ -72,6 +72,6 @@ class UsersControllers extends Controller
             DB::table("membros")->where("email", $_POST["willburys"])
                 ->where("pwdsnh", $_POST["traveling"])->where("active", false)
                 ->update(["active"=>true, "pwdsnh"=>base64_encode(sha1(md5($_POST["pass_2"])))]);
-                echo "atualizado";
+            return view("bootstrap.userefetive");
         }
 }
