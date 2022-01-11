@@ -261,11 +261,11 @@
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
       <p class="col-md-4 mb-0 text-muted">© 2021 Company, Inc</p>
-  
+
       <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
       </a>
-  
+
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
@@ -286,14 +286,23 @@
       </div>
       <div class="modal-body">
         <form action="{{env('PROTOCOL')}}://{{$_SERVER["HTTP_HOST"]}}/siginlogin/" method="POST">
-          <input type="email" name="email">
-          <input type="password" name="senha">
-          <input type="submit" value="entrar">
-        </form>
+            @csrf
+            <div class="mb-3 row">
+                <label for="emailinput" class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="emailinput" name="emailinput">
+                </div>
+              </div>
+              <div class="mb-3 row">
+                <label for="pwdsnh" class="col-sm-2 col-form-label">Senha:</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="pwdsnh" name="pwdsnh">
+                </div>
+              </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <input type="submit" class="btn btn-primary" value="Login">
+        </form>
       </div>
     </div>
   </div>

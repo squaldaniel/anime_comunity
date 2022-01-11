@@ -79,12 +79,12 @@ arg_localidade varchar(100), arg_uf varchar(2), arg_hash varchar(250))
 delimiter ;
 
 delimiter //
-	create procedure del_membro(arg_id int)
+	create procedure del_membro(arg_email varchar(80))
 	begin
-		delete from membro_plano where id = arg_id;
-		delete from membros_location where id = arg_id;
-		delete from membros_info where id = arg_id;
-		delete from membros where id= arg_id;
+		delete from membro_plano where membro = arg_email;
+		delete from membros_location where membro = arg_email;
+		delete from membros_info where membro = arg_email;
+		delete from membros where email = arg_email;
 	end //
 delimiter ;
 

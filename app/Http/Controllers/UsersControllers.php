@@ -19,29 +19,32 @@ class UsersControllers extends Controller
                 {
                     return redirect()->back()->withErrors(['errors' => 'E necessário pegar os dados do cep']);
                 }
-            $sql = 'call add_membro(?, ?, ?, ?, ?, ?, ?, ? ,?, ?)';
+            //$sql = 'call add_membro(:param1, :param2, :param3, :param4, :param5, :param6, :param7 , :param8, :param9, :param10)';
             $hash_user = base64_encode(md5($_POST["email"].date('YmdHms').env("APP_KEY")));
             $cep = str_replace('-', '', $_POST["cep"]);
+            /*
             $newuser = [
-                $_POST["email"],
-                $_POST["nome"],
-                $_POST["sobrenome"],
-                $cep,
-                $_POST["logradouro"],
-                $_POST["numero"],
-                $_POST["bairro"],
-                $_POST["localidade"],
-                $_POST["uf"],
-                $hash_user
+                ":param1"=>$_POST["email"],
+                ":param2"=>$_POST["nome"],
+                ":param3"=>$_POST["sobrenome"],
+                ":param4"=>$cep,
+                ":param5"=>$_POST["logradouro"],
+                ":param6"=>$_POST["numero"],
+                ":param7"=>$_POST["bairro"],
+                ":param8"=>$_POST["localidade"],
+                ":param9"=>$_POST["uf"],
+                ":param10"=>$hash_user
             ];
+            */
+            $sql = 'call add_membro("'.$_POST["email"].'", "'.$_POST["nome"].'", "'.$_POST["sobrenome"]
+                .'", "'.$cep.'", "'.$_POST["logradouro"].'", "'.$_POST["numero"].'", "'.$_POST["bairro"]
+                .'" , "'.$_POST["localidade"].'", "'.$_POST["uf"].'", "'.$hash_user.'")';
             try {
-                DB::select($sql, $newuser);
-                Mail::to("danielshogans@kingkernel.com.br")->send(new NovoMembroMail($_POST["email"]));
+                DB::connection("mysql")->statement($sql); //, $newuser);
+                //DB::select($sql, $newuser);
+                Mail::to($_POST["email"])->send(new NovoMembroMail($_POST["email"]));
                 return view("bootstrap.inscrito");
             } catch (Throwable $th) {
-                //print_r($th);
-                echo "erro no e-mail";
-                exit;
                 switch($th->errorInfo[1])
                     {
                         case '1062':
@@ -49,16 +52,27 @@ class UsersControllers extends Controller
                         break;
 
                         default:
-                        print_r($th->errorInfo[1]);
+                        //print_r($th->errorInfo[1]);
+                        //print_r($th);
+                        echo "sem descrição";
                         break;
                     }
 
             }
-            
+
         }
     public function loginUser(Request $request)
         {
-            print_r($request->input());
+            $sql = DB::table("membros")->select(DB::raw("count(*) as existe"))
+                ->where("email", $request->input("emailinput"))
+                ->where("pwdsnh", base64_encode(sha1(md5($request->input("pwdsnh")))))
+                ->where("active", true)
+                ->get();
+            if($sql[0]->existe == 1){
+                echo "pode logar!";
+            } else {
+                echo "não loga!!";
+            };
         }
     public function activeUser()
         {

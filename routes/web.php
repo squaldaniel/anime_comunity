@@ -32,7 +32,7 @@ Route::get("logout/", function(){
     administrationModel::logout();
     return redirect(route("inicio"));
 });
-Route::get('siginlogin/', [UsersControllers::class, "loginUser"]);
+Route::post('siginlogin/', [UsersControllers::class, "loginUser"]);
 Route::get('useractive/{hash?}', function($hash=null){
     if(isset($hash)){
         if($user = DB::table("membros")->where("pwdsnh", $hash)->where("active", false)->get()->toArray())

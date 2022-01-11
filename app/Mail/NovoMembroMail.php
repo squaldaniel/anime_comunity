@@ -20,9 +20,6 @@ class NovoMembroMail extends Mailable
     public function __construct($email)
     {
         $this->destinatario = $email;
-        $this->hash = DB::table("membros")->where('email', $email)->get()->toArray();
-        $ip = 'http://'.$_SERVER["HTTP_HOST"];
-        $this->hash[0]->ip = $ip;
         return $this;
     }
 
@@ -33,11 +30,11 @@ class NovoMembroMail extends Mailable
      */
     public function build()
     {
-        //return $this->from( $this->destinatario , "Animanquadri")
+        $ip = $_SERVER['PROTOCOL'].'://'.$_SERVER["HTTP_HOST"];
+        $this->hash = DB::table("membros")->where('email', $this->destinatario)->get()->toArray();
+        $this->hash[0]->ip = $ip;
         return $this->from( $this->destinatario)
                 ->subject("Obrigado por entrar nossa comunidade")
-                //->with("$variaveis")
-                ->view('bootstrap.mails.mail_newuser')->with(["user"=>$this->hash[0]]);
-                
+                ->view('bootstrap.mails.mail_newuser')->with(["user"=>$this->hash[0]]);    
     }
 }
