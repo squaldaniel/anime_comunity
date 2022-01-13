@@ -58,3 +58,6 @@ Route::get('inscrito/', function(){
     return view('bootstrap.mails.mail_newuser')->with(["user"=>$dados[0]]);
 });
 Route::post("userefetive/", [UsersControllers::class, "userefetive"]);
+Route::get("/animanquadri", function(){
+    return view("bootstrap.userlogued");
+});
