@@ -61,3 +61,6 @@ Route::post("userefetive/", [UsersControllers::class, "userefetive"]);
 Route::get("/animanquadri", function(){
     return view("bootstrap.userlogued");
 });
+Route::get("/perfil", function(){
+    return view("bootstrap.logado.userperfil");
+});

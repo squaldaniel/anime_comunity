@@ -1,9 +1,23 @@
 @extends('bootstrap.logado.loguedmodel')
 @section("body")
+<style>
+    @font-face {
+  font-family: "nomeUser";
+  src: url("{{asset("fonts/Alternitty.ttf")}}") format("ttf"),
+}
+body .blur {
+    background-image: url("{{asset("fundo.jpg")}}");
+    filter: blur(8px);
+    -webkit-filter: blur(5px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" style="background-color: black;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <span class="fs-4 text-white">Animanquadri - Clube Online de Fãs</span>
+        <span class="fs-4 text-white nomepessoa">Animanquadri - Clube Online de Fãs</span>
       </a>
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Inicio</a></li>
