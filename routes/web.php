@@ -64,3 +64,10 @@ Route::get("/animanquadri", function(){
 Route::get("/perfil", function(){
     return view("bootstrap.logado.userperfil");
 });
+Route::get("/adm/painel", function(){
+    return view("bootstrap.logado.adminpainel");
+});
+Route::get("/adm/videos", function(){
+    return view("bootstrap.logado.videos");
+});
+Route::post("/adm/cadobject",[App\Http\Controllers\ControleGeralController::class, 'cadobject']);

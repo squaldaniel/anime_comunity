@@ -137,7 +137,7 @@ delimiter //
 		end //
 delimiter ;
 
-create view allusers as 
+create view allusers as
 	select id, email, pwdsnh, active, type_user from administration union select id, email, pwdsnh, active, type_user from membros;
 
 create table tokens_access(
@@ -149,6 +149,15 @@ create table tokens_access(
 	create_in datetime default CURRENT_TIMESTAMP,
 	expire_in datetime default (ADDDATE(CURRENT_TIMESTAMP, INTERVAL 1 DAY)),
 	primary key(id)
+)engine=innodb charset=utf8mb4;
+
+create table admobjects(
+    id int unsigned auto_increment PRIMARY KEY,
+    categoria int unsigned,
+    tipo int unsigned,
+    nome varchar(150),
+    foreign key(categoria) references categorias (id),
+    foreign key(tipo) references obj_type (id),
 )engine=innodb charset=utf8mb4;
 
 
