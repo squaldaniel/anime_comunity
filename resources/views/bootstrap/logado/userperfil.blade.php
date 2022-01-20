@@ -67,6 +67,7 @@ body .blur {
 <div class="container">
     <div class="row"  >
         <div class="col-md-2 shadow" style="border-radius: 20px; "   >
+            @include("bootstrap.logado.meperfil")
             <ul class="list-unstyled">
                 <li class="dropdown-item d-flex gap-2 align-items-center">
                     <a href="/" class="nav-link text-white"><span class="fa fa-comment"></span> Mensagens</a>

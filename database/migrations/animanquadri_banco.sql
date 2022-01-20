@@ -156,8 +156,9 @@ create table admobjects(
     categoria int unsigned,
     tipo int unsigned,
     nome varchar(150),
+    galeryId int,
     foreign key(categoria) references categorias (id),
-    foreign key(tipo) references obj_type (id),
+    foreign key(tipo) references obj_type (id)
 )engine=innodb charset=utf8mb4;
 
 

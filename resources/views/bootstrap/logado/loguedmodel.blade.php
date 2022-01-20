@@ -13,6 +13,16 @@ $region = 'pt-br';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"  referrerpolicy="no-referrer" />
     -->
     <link rel="stylesheet" href="{{asset("css/fontawesome.all.min.css")}}"  referrerpolicy="no-referrer" />
+    <style>
+    @font-face {
+        font-family: "Alternitty";
+        src: url("{{asset('Alternitty.ttf')}}") format('truetype');
+    }
+    .personal {
+        font-family: "Alternitty";
+        color: Black;
+    }
+    </style>
 @section("scripthead")
 @show
 </head>
