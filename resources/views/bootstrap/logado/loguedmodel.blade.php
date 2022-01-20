@@ -16,11 +16,12 @@ $region = 'pt-br';
     <style>
     @font-face {
         font-family: "Alternitty";
-        src: url("{{asset('Alternitty.ttf')}}") format('truetype');
+        src: url("{{asset('OverThere.ttf')}}") format('truetype');
     }
     .personal {
         font-family: "Alternitty";
         color: Black;
+        font-size: 15pt;
     }
     </style>
 @section("scripthead")
