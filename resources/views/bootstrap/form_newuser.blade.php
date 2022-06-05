@@ -102,7 +102,7 @@ $(document).ready(function(){
         $("cep").focus();
         return false;
       } else {
-        var url = 'http://viacep.com.br/ws/'+ cep +'/json/';
+        var url = 'https://viacep.com.br/ws/'+ cep +'/json/';
         $("#oculta").load(url, function(data)
             {
                 var obj = jQuery.parseJSON(data);
